@@ -1,0 +1,52 @@
+create database BMS;
+use bms;
+CREATE TABLE signup (
+    formno INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50),
+    fatherName VARCHAR(50),
+    motherName VARCHAR(50),
+    gender VARCHAR(10),
+    dob VARCHAR(20),
+    email VARCHAR(50),
+    address TEXT,
+    city VARCHAR(50),
+    pincode VARCHAR(10),
+    state VARCHAR(50),
+    education VARCHAR(50),
+    occupation VARCHAR(50),
+    income VARCHAR(20),
+    aadhar VARCHAR(20),
+    scitizen VARCHAR(5)
+);
+CREATE TABLE signup2 (
+    formno INT AUTO_INCREMENT PRIMARY KEY,
+    bank VARCHAR(100),
+    branch VARCHAR(100),
+    code VARCHAR(50),
+    account_type VARCHAR(50),
+    card_number VARCHAR(20),
+    pin_number VARCHAR(10),
+    facilities VARCHAR(255)
+);
+CREATE TABLE signin (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    formno INT,
+    card_number VARCHAR(20),
+    login_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (formno) REFERENCES signup2(formno)
+);
+ALTER TABLE signup2 ADD COLUMN balance DOUBLE DEFAULT 0.0;
+ALTER TABLE signup2 ADD UNIQUE (card_number);
+
+CREATE TABLE transactions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    card_number VARCHAR(20),
+    type VARCHAR(10), -- 'deposit' or 'withdraw'
+    amount DOUBLE,
+    date_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (card_number) REFERENCES signup2(card_number)
+);
+select * from signup;
+select * from signup2;
+select * from signin;
+select * from transactions;
